@@ -5,7 +5,7 @@
 
 ## Quickstart
 ```
-    git clone https://github.com/educhav/map-builder/
-    cd map-builder
-    python3 main.py "mapfilename.png"
+git clone https://github.com/educhav/map-builder/
+cd map-builder
+python3 main.py "mapfilename.png"
 ```
