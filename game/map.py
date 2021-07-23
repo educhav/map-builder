@@ -62,9 +62,6 @@ class Map:
                 map_tile = texture[1]
                 standardized_x = (position[0] - self.texture_padding) // 32
                 standardized_y = (position[1] - self.texture_padding) // 32
-                print("expected tile:", (standardized_x, standardized_y))
-                print("actual tile: ", map_tile)
                 if (map_tile[0] == standardized_x and (map_tile[1] == standardized_y)):
-                    print("changing texture..")
                     self.current_texture = texture[0]
             map_row_index += 1
