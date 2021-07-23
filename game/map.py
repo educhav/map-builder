@@ -19,7 +19,6 @@ class Map:
 
     def update(self, position):
         draw_coordinates = (position[0] // self.texture_size, position[1] // self.texture_size)
-        print(draw_coordinates)
         self.current_map[draw_coordinates[0], draw_coordinates[1]] = self.current_texture
 
     def draw(self):
