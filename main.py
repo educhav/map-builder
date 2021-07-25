@@ -13,8 +13,18 @@ WINDOW.fill(BLACK)
 
 clock = pygame.time.Clock()
 map = Map(WINDOW)
+COUNTER = 0
 game = Game()
+
+# Too many events can accelerate the event loop unexpectedly
 pygame.event.set_blocked(pygame.MOUSEMOTION)
+pygame.event.set_blocked(pygame.MOUSEBUTTONUP)
+pygame.event.set_blocked(pygame.WINDOWENTER)
+pygame.event.set_blocked(pygame.WINDOWLEAVE)
+pygame.event.set_blocked(pygame.WINDOWFOCUSGAINED)
+pygame.event.set_blocked(pygame.WINDOWFOCUSLOST)
+pygame.event.set_blocked(pygame.KEYUP)
+pygame.event.set_blocked(pygame.ACTIVEEVENT)
 
 def main():
     while True:
@@ -30,9 +40,11 @@ def main():
                     pygame.display.update()
             if event.type == pygame.QUIT:
                 sys.exit()
-
-            if keys_pressed[pygame.K_LCTRL] and keys_pressed[pygame.K_s]:
-                map.save(sys.argv[1])
+            if keys_pressed[pygame.K_LCTRL]:
+                if keys_pressed[pygame.K_s]:
+                    map.save(sys.argv[1])
+                if keys_pressed[pygame.K_r]:
+                    map.rotate_current_texture()
 
             if game.state == "MENU":
                 map.show_palette()
