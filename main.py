@@ -1,4 +1,5 @@
 import sys
+import os
 import pygame
 from game.constants import GAME_WIDTH, GAME_HEIGHT, BLACK
 from game.map import Map, Game
@@ -36,7 +37,10 @@ def main():
                     game.state = "MENU"
                 else:
                     game.state = "NORMAL"
-                    map.draw()
+                    if (game.load_state == "LOAD"):
+                        map.draw(game.load_state, os.path.join("maps", sys.argv[2]))
+                    else:
+                        map.draw(game.load_state)
                     pygame.display.update()
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -45,7 +49,9 @@ def main():
                     map.save(sys.argv[1])
                 if keys_pressed[pygame.K_r]:
                     map.rotate_current_texture()
-
+                if keys_pressed[pygame.K_l]:
+                    game.load_state = "LOAD"
+                    map.load_previous_map(sys.argv[2])
             if game.state == "MENU":
                 map.show_palette()
                 pygame.display.update()
@@ -56,6 +62,6 @@ def main():
                     map.change_current_texture((x,y))
                 else:
                     map.update((x, y))
-                    map.draw()
+                    map.draw(game.load_state)
                     pygame.display.update()
 main()

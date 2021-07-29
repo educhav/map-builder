@@ -4,7 +4,7 @@ import numpy as np
 class Game:
     def __init__(self):
         self.state = "NORMAL"
-        self.rotate_degrees = 0
+        self.load_state = "NONE"
 
 class Map:
     def __init__(self, window):
@@ -31,11 +31,14 @@ class Map:
         draw_coordinates = (position[0] // self.texture_size, position[1] // self.texture_size)
         self.current_map[draw_coordinates[0], draw_coordinates[1]] = self.current_texture
 
-    def draw(self):
+    def draw(self, load_state, image=None):
         x, y = 0, 0
+        if (image):
+            self.window.blit(scale(load(image), (GAME_WIDTH, GAME_HEIGHT)), (0, 0))
         for row in self.current_map:
             for texture in row:
-                self.window.blit(self.texture_table[texture], (x, y))
+                if texture != -100:
+                    self.window.blit(self.texture_table[texture], (x, y))
                 y += self.texture_size
                 if (y >= GAME_HEIGHT):
                     y = 0
@@ -80,3 +83,7 @@ class Map:
             self.current_texture -= 3
         else:
             self.current_texture += 1
+
+    def load_previous_map(self, map_file):
+        self.current_map = np.array([[-100 for i in range(self.rows)] for j in range(self.cols)])
+        self.window.blit(scale(load(os.path.join("maps", map_file)), (GAME_WIDTH, GAME_HEIGHT)), (0, 0))
